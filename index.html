@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ram's Garage Auto Repair | Trusted Auto Repair Since 1987 | Edison, NJ</title>
+<meta name="description" content="Ram's Garage Auto Repair in Edison, NJ. ASE Certified, BBB A+ Rated, family-owned since 1987. Oil changes, brakes, engine repair, diagnostics & more.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#111;--bg-light:#1a1a1a;--bg-card:#222;--red:#e63946;--red-dark:#c5303c;--text:#f8f9fa;--text-muted:#adb5bd;--gold:#f4a261;--radius:8px}
+html{scroll-behavior:smooth}
+body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4,h5,h6{font-family:'Rajdhani',sans-serif;font-weight:700;line-height:1.2}
+a{color:var(--red);text-decoration:none;transition:color .2s}
+a:hover{color:var(--gold)}
+img{max-width:100%;display:block}
+.container{max-width:1200px;margin:0 auto;padding:0 20px}
+.btn{display:inline-block;padding:14px 36px;background:var(--red);color:#fff;font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;border:2px solid var(--red);border-radius:var(--radius);cursor:pointer;transition:all .3s}
+.btn:hover{background:transparent;color:var(--red)}
+.btn-outline{background:transparent;color:var(--text);border-color:var(--text)}
+.btn-outline:hover{background:var(--text);color:var(--bg)}
+.section-title{font-size:clamp(2rem,5vw,2.8rem);text-transform:uppercase;letter-spacing:2px;margin-bottom:.5rem}
+.section-title span{color:var(--red)}
+.section-subtitle{color:var(--text-muted);font-size:1.05rem;margin-bottom:3rem}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;width:100%;z-index:1000;background:rgba(17,17,17,.95);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.05);transition:box-shadow .3s}
+nav.scrolled{box-shadow:0 2px 20px rgba(0,0,0,.5)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;max-width:1200px;margin:0 auto}
+.nav-logo{font-family:'Rajdhani',sans-serif;font-size:1.5rem;font-weight:700;color:var(--text);letter-spacing:1px}
+.nav-logo span{color:var(--red)}
+.nav-links{display:flex;gap:28px;list-style:none;align-items:center}
+.nav-links a{color:var(--text-muted);font-size:.9rem;font-weight:600;text-transform:uppercase;letter-spacing:1px;transition:color .2s;position:relative}
+.nav-links a:hover,.nav-links a.active{color:var(--red)}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--red);transition:width .3s}
+.nav-links a:hover::after{width:100%}
+.nav-cta{padding:8px 20px;font-size:.85rem}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:5px;background:none;border:none}
+.hamburger span{width:24px;height:2px;background:var(--text);transition:all .3s}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.hamburger.active span:nth-child(2){opacity:0}
+.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:120px 20px 80px}
+.hero::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(17,17,17,.97) 0%,rgba(17,17,17,.85) 50%,rgba(230,57,70,.15) 100%)}
+.hero-bg{position:absolute;inset:0;background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse"><path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/></pattern></defs><rect width="1200" height="800" fill="url(%23grid)"/></svg>') center/cover}
+.hero-content{position:relative;z-index:2;max-width:700px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(230,57,70,.15);border:1px solid rgba(230,57,70,.3);padding:8px 18px;border-radius:30px;font-size:.85rem;font-weight:600;color:var(--red);margin-bottom:24px;text-transform:uppercase;letter-spacing:2px}
+.hero-badge::before{content:'';width:8px;height:8px;background:var(--red);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero h1{font-size:clamp(2.5rem,7vw,4.5rem);text-transform:uppercase;letter-spacing:3px;margin-bottom:8px}
+.hero h1 span{color:var(--red);display:block}
+.hero-tagline{font-size:clamp(1.1rem,2.5vw,1.35rem);color:var(--text-muted);margin-bottom:36px;max-width:550px}
+.hero-buttons{display:flex;gap:16px;flex-wrap:wrap}
+.hero-stats{display:flex;gap:48px;margin-top:60px;padding-top:40px;border-top:1px solid rgba(255,255,255,.08)}
+.hero-stat h3{font-size:2.2rem;color:var(--red)}
+.hero-stat p{color:var(--text-muted);font-size:.85rem;text-transform:uppercase;letter-spacing:1px}
+.hero-accent{position:absolute;right:-100px;top:50%;transform:translateY(-50%);width:500px;height:500px;border:2px solid rgba(230,57,70,.08);border-radius:50%;pointer-events:none}
+.hero-accent::after{content:'';position:absolute;right:-60px;top:-60px;width:620px;height:620px;border:1px solid rgba(230,57,70,.04);border-radius:50%}
+
+/* SERVICES */
+.services{padding:100px 0;background:var(--bg)}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:24px}
+.service-card{background:var(--bg-card);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);padding:32px 28px;transition:all .3s;position:relative;overflow:hidden}
+.service-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.service-card:hover{transform:translateY(-4px);border-color:rgba(230,57,70,.2)}
+.service-card:hover::before{transform:scaleX(1)}
+.service-icon{width:52px;height:52px;background:rgba(230,57,70,.1);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;margin-bottom:20px;font-size:1.5rem}
+.service-card h3{font-size:1.25rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.service-card p{color:var(--text-muted);font-size:.9rem;line-height:1.7}
+
+/* TRUST */
+.trust{padding:80px 0;background:var(--bg-light);border-top:1px solid rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.05)}
+.trust-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:32px;text-align:center}
+.trust-item{padding:40px 24px}
+.trust-icon{font-size:3rem;margin-bottom:16px}
+.trust-item h3{font-size:1.3rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.trust-item p{color:var(--text-muted);font-size:.9rem}
+
+/* WHY US */
+.why-us{padding:100px 0;background:var(--bg)}
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.why-features{display:flex;flex-direction:column;gap:28px}
+.why-feature{display:flex;gap:20px}
+.why-feature-icon{flex-shrink:0;width:48px;height:48px;background:rgba(230,57,70,.1);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:var(--red)}
+.why-feature h4{font-size:1.1rem;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px}
+.why-feature p{color:var(--text-muted);font-size:.9rem}
+.why-image{background:var(--bg-card);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);padding:48px;text-align:center;position:relative}
+.why-image-text{font-family:'Rajdhani',sans-serif;font-size:6rem;font-weight:700;color:var(--red);opacity:.15;line-height:1}
+.why-image-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.why-image-overlay h3{font-size:2rem;text-transform:uppercase;letter-spacing:2px}
+.why-image-overlay p{color:var(--text-muted);font-size:1rem;margin-top:4px}
+
+/* REVIEWS */
+.reviews{padding:100px 0;background:var(--bg-light);border-top:1px solid rgba(255,255,255,.05)}
+.reviews-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:24px}
+.review-card{background:var(--bg-card);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);padding:32px}
+.review-stars{color:var(--gold);font-size:1.1rem;letter-spacing:2px;margin-bottom:16px}
+.review-text{color:var(--text-muted);font-size:.95rem;line-height:1.8;margin-bottom:20px;font-style:italic}
+.review-author{display:flex;align-items:center;gap:12px}
+.review-avatar{width:44px;height:44px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1.1rem}
+.review-name{font-weight:700;font-size:.95rem}
+.review-date{color:var(--text-muted);font-size:.8rem}
+
+/* FORM */
+.contact{padding:100px 0;background:var(--bg)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px}
+.form-group{margin-bottom:20px}
+.form-group label{display:block;font-size:.85rem;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;color:var(--text-muted)}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:14px 18px;background:var(--bg-card);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius);color:var(--text);font-family:'Open Sans',sans-serif;font-size:.95rem;transition:border-color .3s}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--red)}
+.form-group textarea{resize:vertical;min-height:120px}
+.form-group select{cursor:pointer;appearance:none;background-image:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23adb5bd" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>');background-repeat:no-repeat;background-position:right 14px center;background-size:18px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.contact-info h3{font-size:1.8rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:24px}
+.contact-info-item{display:flex;gap:16px;margin-bottom:28px}
+.contact-info-icon{flex-shrink:0;width:44px;height:44px;background:rgba(230,57,70,.1);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;color:var(--red);font-size:1.1rem}
+.contact-info-item h4{font-size:1rem;margin-bottom:2px}
+.contact-info-item p{color:var(--text-muted);font-size:.9rem}
+.hours-table{width:100%;margin-top:8px}
+.hours-table tr{border-bottom:1px solid rgba(255,255,255,.05)}
+.hours-table td{padding:8px 0;font-size:.9rem}
+.hours-table td:first-child{color:var(--text-muted)}
+.hours-table td:last-child{text-align:right;font-weight:600}
+.hours-table .today{color:var(--red)}
+.map-placeholder{margin-top:32px;background:var(--bg-card);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);overflow:hidden;height:200px;display:flex;align-items:center;justify-content:center}
+.map-placeholder iframe{width:100%;height:100%;border:0;filter:grayscale(.8) contrast(1.1) brightness(.7)}
+
+/* FOOTER */
+footer{background:var(--bg-light);border-top:1px solid rgba(255,255,255,.05);padding:60px 0 0}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;padding-bottom:40px}
+.footer-brand p{color:var(--text-muted);font-size:.9rem;margin-top:12px;max-width:320px;line-height:1.7}
+.footer-heading{font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:20px;color:var(--text)}
+.footer-links{list-style:none}
+.footer-links li{margin-bottom:10px}
+.footer-links a{color:var(--text-muted);font-size:.9rem;transition:color .2s}
+.footer-links a:hover{color:var(--red)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.05);padding:20px 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;font-size:.85rem;color:var(--text-muted)}
+
+/* MOBILE */
+@media(max-width:900px){
+  .nav-links{display:none;position:absolute;top:100%;left:0;width:100%;background:rgba(17,17,17,.98);flex-direction:column;padding:24px;gap:20px;border-top:1px solid rgba(255,255,255,.05)}
+  .nav-links.open{display:flex}
+  .hamburger{display:flex}
+  .hero-stats{gap:24px;flex-wrap:wrap}
+  .why-grid,.contact-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .reviews-grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .hero-buttons{flex-direction:column}
+  .hero-buttons .btn{text-align:center}
+  .hero-stats{flex-direction:column;gap:20px}
+  .form-row{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+  .services-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">RAM'S <span>GARAGE</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#why-us">About</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#contact" class="btn nav-cta">Book Service</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-accent"></div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-badge">Now Accepting New Customers</div>
+      <h1>Trusted Auto Repair <span>Since 1987</span></h1>
+      <p class="hero-tagline">Family-owned and operated in Edison, NJ. ASE-certified mechanics delivering honest, reliable service for over 35 years.</p>
+      <div class="hero-buttons">
+        <a href="#contact" class="btn">Schedule Service</a>
+        <a href="tel:+17325551987" class="btn btn-outline">Call (732) 555-1987</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <h3>35+</h3>
+          <p>Years in Business</p>
+        </div>
+        <div class="hero-stat">
+          <h3>15K+</h3>
+          <p>Vehicles Serviced</p>
+        </div>
+        <div class="hero-stat">
+          <h3>4.9&#9733;</h3>
+          <p>Google Rating</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:60px">
+      <h2 class="section-title">Our <span>Services</span></h2>
+      <p class="section-subtitle">Complete auto care from routine maintenance to major repairs</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">&#128267;</div>
+        <h3>Oil Change</h3>
+        <p>Conventional, synthetic blend, and full synthetic oil changes with multi-point inspection included.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">&#9899;</div>
+        <h3>Brake Service</h3>
+        <p>Brake pads, rotors, calipers, and fluid flush. We ensure your stopping power is always at its best.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">&#9881;&#65039;</div>
+        <h3>Engine Repair</h3>
+        <p>From tune-ups to complete engine rebuilds, our certified technicians handle it all.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">&#128260;</div>
+        <h3>Transmission</h3>
+        <p>Fluid services, repairs, and rebuilds for both automatic and manual transmissions.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">&#11044;</div>
+        <h3>Tires</h3>
+        <p>New tires, mounting, balancing, rotation, alignment, and flat repair services.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">&#128187;</div>
+        <h3>Diagnostics</h3>
+        <p>State-of-the-art computer diagnostics to pinpoint issues quickly and accurately.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">&#10052;&#65039;</div>
+        <h3>AC / Heating</h3>
+        <p>Full climate system service including recharge, compressor repair, and heater core replacement.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">&#9989;</div>
+        <h3>NJ State Inspection</h3>
+        <p>Licensed NJ State Inspection station. Quick, convenient, and thorough inspections.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BADGES -->
+<section class="trust" id="trust">
+  <div class="container">
+    <div class="trust-grid">
+      <div class="trust-item">
+        <div class="trust-icon">&#127942;</div>
+        <h3>ASE Certified</h3>
+        <p>Our technicians hold current ASE certifications across all major automotive systems.</p>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">&#11088;</div>
+        <h3>BBB A+ Rating</h3>
+        <p>Accredited by the Better Business Bureau with their highest rating for trust and service.</p>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">&#128197;</div>
+        <h3>35+ Years</h3>
+        <p>Proudly serving the Edison community and surrounding areas since 1987.</p>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">&#128106;</div>
+        <h3>Family Owned</h3>
+        <p>A true family business built on personal relationships and old-fashioned integrity.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why-us" id="why-us">
+  <div class="container">
+    <div class="why-grid">
+      <div>
+        <h2 class="section-title">Why Choose <span>Ram's?</span></h2>
+        <p class="section-subtitle" style="margin-bottom:36px">We treat every car like it's our own</p>
+        <div class="why-features">
+          <div class="why-feature">
+            <div class="why-feature-icon">&#9745;&#65039;</div>
+            <div>
+              <h4>Honest Estimates</h4>
+              <p>No hidden fees, no surprise charges. We explain every repair before we start and only do what's needed.</p>
+            </div>
+          </div>
+          <div class="why-feature">
+            <div class="why-feature-icon">&#128736;&#65039;</div>
+            <div>
+              <h4>Quality Parts</h4>
+              <p>We use OEM and premium aftermarket parts backed by manufacturer warranties.</p>
+            </div>
+          </div>
+          <div class="why-feature">
+            <div class="why-feature-icon">&#9200;</div>
+            <div>
+              <h4>Fast Turnaround</h4>
+              <p>Most services completed same-day. We value your time as much as you do.</p>
+            </div>
+          </div>
+          <div class="why-feature">
+            <div class="why-feature-icon">&#128172;</div>
+            <div>
+              <h4>Clear Communication</h4>
+              <p>We keep you informed at every step with photos and updates on your vehicle's progress.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="why-image">
+        <div class="why-image-text">SINCE<br>1987</div>
+        <div class="why-image-overlay">
+          <h3>Est. 1987</h3>
+          <p>Edison, New Jersey</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews" id="reviews">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:60px">
+      <h2 class="section-title">What Our <span>Customers</span> Say</h2>
+      <p class="section-subtitle">Real reviews from real people</p>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="review-text">"I've been taking my cars to Ram's for over 15 years. They're always upfront about costs, never push unnecessary work, and the quality is top-notch. Best mechanic in Edison, hands down."</p>
+        <div class="review-author">
+          <div class="review-avatar">MJ</div>
+          <div>
+            <div class="review-name">Michael J.</div>
+            <div class="review-date">Google Review</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="review-text">"Brought my car in with a check engine light and they diagnosed the issue within an hour. Fair price, quick turnaround, and they even washed it before I picked it up. Highly recommend!"</p>
+        <div class="review-author">
+          <div class="review-avatar">SP</div>
+          <div>
+            <div class="review-name">Sarah P.</div>
+            <div class="review-date">Google Review</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="review-text">"Finally found an honest mechanic! Ram and his team went above and beyond when my transmission needed work. They found a more affordable solution and saved me over $800. This is a family you can trust."</p>
+        <div class="review-author">
+          <div class="review-avatar">DK</div>
+          <div>
+            <div class="review-name">David K.</div>
+            <div class="review-date">Google Review</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT / FORM -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:60px">
+      <h2 class="section-title">Request <span>Service</span></h2>
+      <p class="section-subtitle">Fill out the form below and we'll get back to you promptly</p>
+    </div>
+    <div class="contact-grid">
+      <form id="serviceForm" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" required placeholder="John Smith">
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" required placeholder="(732) 555-0000">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" required placeholder="john@example.com">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="vehicle">Vehicle (Year / Make / Model)</label>
+            <input type="text" id="vehicle" name="vehicle" required placeholder="2020 Honda Accord">
+          </div>
+          <div class="form-group">
+            <label for="service">Service Needed</label>
+            <select id="service" name="service" required>
+              <option value="" disabled selected>Select a service</option>
+              <option>Oil Change</option>
+              <option>Brake Service</option>
+              <option>Engine Repair</option>
+              <option>Transmission</option>
+              <option>Tires</option>
+              <option>Diagnostics</option>
+              <option>AC / Heating</option>
+              <option>NJ State Inspection</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="message">Describe the Issue</label>
+          <textarea id="message" name="message" placeholder="Tell us what's going on with your vehicle..."></textarea>
+        </div>
+        <button type="submit" class="btn" style="width:100%">Submit Service Request</button>
+        <div id="formMessage" style="margin-top:16px;text-align:center;display:none;padding:14px;border-radius:var(--radius);font-weight:600"></div>
+      </form>
+
+      <div class="contact-info">
+        <h3>Get In Touch</h3>
+        <div class="contact-info-item">
+          <div class="contact-info-icon">&#128205;</div>
+          <div>
+            <h4>Location</h4>
+            <p>Edison, NJ 08817</p>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-info-icon">&#128222;</div>
+          <div>
+            <h4>Phone</h4>
+            <p><a href="tel:+17325551987">(732) 555-1987</a></p>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-info-icon">&#128231;</div>
+          <div>
+            <h4>Email</h4>
+            <p><a href="mailto:service@ramsgarage.com">service@ramsgarage.com</a></p>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-info-icon">&#128338;</div>
+          <div>
+            <h4>Business Hours</h4>
+            <table class="hours-table">
+              <tr><td>Monday &ndash; Friday</td><td>8:00 AM &ndash; 6:00 PM</td></tr>
+              <tr><td>Saturday</td><td>8:00 AM &ndash; 3:00 PM</td></tr>
+              <tr><td>Sunday</td><td>Closed</td></tr>
+            </table>
+          </div>
+        </div>
+        <div class="map-placeholder">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d48564.27726690818!2d-74.3729!3d40.5187!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c3b62fa20bfc6f%3A0xc9f5a1c1f2a6f4c0!2sEdison%2C%20NJ!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Ram's Garage location in Edison, NJ"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo" style="font-size:1.8rem">RAM'S <span>GARAGE</span></a>
+        <p>Family-owned auto repair serving Edison, NJ and surrounding communities since 1987. ASE Certified technicians you can trust with your vehicle.</p>
+      </div>
+      <div>
+        <h4 class="footer-heading">Services</h4>
+        <ul class="footer-links">
+          <li><a href="#services">Oil Change</a></li>
+          <li><a href="#services">Brake Service</a></li>
+          <li><a href="#services">Engine Repair</a></li>
+          <li><a href="#services">Transmission</a></li>
+          <li><a href="#services">Tires</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-heading">More Services</h4>
+        <ul class="footer-links">
+          <li><a href="#services">Diagnostics</a></li>
+          <li><a href="#services">AC / Heating</a></li>
+          <li><a href="#services">NJ Inspection</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-heading">Contact</h4>
+        <ul class="footer-links">
+          <li><a href="tel:+17325551987">(732) 555-1987</a></li>
+          <li><a href="mailto:service@ramsgarage.com">service@ramsgarage.com</a></li>
+          <li>Edison, NJ 08817</li>
+          <li style="margin-top:8px">Mon&ndash;Fri: 8AM&ndash;6PM</li>
+          <li>Sat: 8AM&ndash;3PM</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Ram's Garage Auto Repair. All rights reserved.</p>
+      <p>Serving Edison, Metuchen, Woodbridge, Piscataway &amp; Central NJ</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Navbar scroll effect
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// Hamburger menu
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('active');
+  navLinks.classList.toggle('open');
+});
+navLinks.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    hamburger.classList.remove('active');
+    navLinks.classList.remove('open');
+  });
+});
+
+// Form handling
+function handleSubmit(e) {
+  e.preventDefault();
+  const msg = document.getElementById('formMessage');
+  msg.style.display = 'block';
+  msg.style.background = 'rgba(230,57,70,.15)';
+  msg.style.color = '#4caf50';
+  msg.textContent = 'Thank you! Your service request has been submitted. We\'ll contact you shortly.';
+  e.target.reset();
+  setTimeout(() => { msg.style.display = 'none'; }, 6000);
+}
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+// Scroll reveal animation
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.service-card, .review-card, .trust-item, .why-feature').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
