@@ -12,23 +12,43 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--bg:#111;--bg-light:#1a1a1a;--bg-card:#222;--red:#e63946;--red-dark:#c5303c;--text:#f8f9fa;--text-muted:#adb5bd;--gold:#f4a261;--radius:8px}
 html{scroll-behavior:smooth}
-body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
+body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 h1,h2,h3,h4,h5,h6{font-family:'Rajdhani',sans-serif;font-weight:700;line-height:1.2}
 a{color:var(--red);text-decoration:none;transition:color .2s}
 a:hover{color:var(--gold)}
 img{max-width:100%;display:block}
 .container{max-width:1200px;margin:0 auto;padding:0 20px}
 .btn{display:inline-block;padding:14px 36px;background:var(--red);color:#fff;font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;border:2px solid var(--red);border-radius:var(--radius);cursor:pointer;transition:all .3s}
-.btn:hover{background:transparent;color:var(--red)}
+.btn:hover{background:transparent;color:var(--red);transform:scale(1.05)}
 .btn-outline{background:transparent;color:var(--text);border-color:var(--text)}
-.btn-outline:hover{background:var(--text);color:var(--bg)}
+.btn-outline:hover{background:var(--text);color:var(--bg);transform:scale(1.05)}
 .section-title{font-size:clamp(2rem,5vw,2.8rem);text-transform:uppercase;letter-spacing:2px;margin-bottom:.5rem}
 .section-title span{color:var(--red)}
 .section-subtitle{color:var(--text-muted);font-size:1.05rem;margin-bottom:3rem}
 
+/* SCROLL REVEAL */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-left{opacity:0;transform:translateX(-60px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+.reveal-left.visible{opacity:1;transform:translateX(0)}
+.reveal-right{opacity:0;transform:translateX(60px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+.reveal-right.visible{opacity:1;transform:translateX(0)}
+.reveal-scale{opacity:0;transform:scale(.85);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+.reveal-scale.visible{opacity:1;transform:scale(1)}
+
+/* STAGGER CHILDREN */
+.stagger-children .reveal:nth-child(1){transition-delay:.05s}
+.stagger-children .reveal:nth-child(2){transition-delay:.12s}
+.stagger-children .reveal:nth-child(3){transition-delay:.19s}
+.stagger-children .reveal:nth-child(4){transition-delay:.26s}
+.stagger-children .reveal:nth-child(5){transition-delay:.33s}
+.stagger-children .reveal:nth-child(6){transition-delay:.40s}
+.stagger-children .reveal:nth-child(7){transition-delay:.47s}
+.stagger-children .reveal:nth-child(8){transition-delay:.54s}
+
 /* NAV */
-nav{position:fixed;top:0;left:0;width:100%;z-index:1000;background:rgba(17,17,17,.95);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.05);transition:box-shadow .3s}
-nav.scrolled{box-shadow:0 2px 20px rgba(0,0,0,.5)}
+nav{position:fixed;top:0;left:0;width:100%;z-index:1000;background:rgba(17,17,17,.92);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.05);transition:all .4s}
+nav.scrolled{box-shadow:0 4px 30px rgba(0,0,0,.6);background:rgba(17,17,17,.97)}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;max-width:1200px;margin:0 auto}
 .nav-logo{font-family:'Rajdhani',sans-serif;font-size:1.5rem;font-weight:700;color:var(--text);letter-spacing:1px}
 .nav-logo span{color:var(--red)}
@@ -46,63 +66,98 @@ nav.scrolled{box-shadow:0 2px 20px rgba(0,0,0,.5)}
 
 /* HERO */
 .hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:120px 20px 80px}
-.hero::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(17,17,17,.97) 0%,rgba(17,17,17,.85) 50%,rgba(230,57,70,.15) 100%)}
-.hero-bg{position:absolute;inset:0;background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse"><path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/></pattern></defs><rect width="1200" height="800" fill="url(%23grid)"/></svg>') center/cover}
-.hero-content{position:relative;z-index:2;max-width:700px}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(230,57,70,.15);border:1px solid rgba(230,57,70,.3);padding:8px 18px;border-radius:30px;font-size:.85rem;font-weight:600;color:var(--red);margin-bottom:24px;text-transform:uppercase;letter-spacing:2px}
+.hero-bg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.3) contrast(1.1);transform:scale(1.1);will-change:transform}
+.hero::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(17,17,17,.92) 0%,rgba(17,17,17,.7) 50%,rgba(230,57,70,.12) 100%);z-index:1}
+.hero-grid-overlay{position:absolute;inset:0;background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse"><path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/></pattern></defs><rect width="1200" height="800" fill="url(%23grid)"/></svg>') center/cover;z-index:2}
+.hero-content{position:relative;z-index:3;max-width:700px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(230,57,70,.15);border:1px solid rgba(230,57,70,.3);padding:8px 18px;border-radius:30px;font-size:.85rem;font-weight:600;color:var(--red);margin-bottom:24px;text-transform:uppercase;letter-spacing:2px;animation:fadeSlideDown .8s .2s both}
 .hero-badge::before{content:'';width:8px;height:8px;background:var(--red);border-radius:50%;animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-.hero h1{font-size:clamp(2.5rem,7vw,4.5rem);text-transform:uppercase;letter-spacing:3px;margin-bottom:8px}
+@keyframes fadeSlideDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeSlideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes scaleIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+@keyframes slideInLeft{from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:translateX(0)}}
+@keyframes countUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes glowPulse{0%,100%{box-shadow:0 0 20px rgba(230,57,70,.15)}50%{box-shadow:0 0 40px rgba(230,57,70,.3)}}
+@keyframes rotateIn{from{opacity:0;transform:rotate(-10deg) scale(.9)}to{opacity:1;transform:rotate(0) scale(1)}}
+.hero h1{font-size:clamp(2.5rem,7vw,4.5rem);text-transform:uppercase;letter-spacing:3px;margin-bottom:8px;animation:fadeSlideUp .8s .4s both}
 .hero h1 span{color:var(--red);display:block}
-.hero-tagline{font-size:clamp(1.1rem,2.5vw,1.35rem);color:var(--text-muted);margin-bottom:36px;max-width:550px}
-.hero-buttons{display:flex;gap:16px;flex-wrap:wrap}
-.hero-stats{display:flex;gap:48px;margin-top:60px;padding-top:40px;border-top:1px solid rgba(255,255,255,.08)}
-.hero-stat h3{font-size:2.2rem;color:var(--red)}
+.hero-tagline{font-size:clamp(1.1rem,2.5vw,1.35rem);color:var(--text-muted);margin-bottom:36px;max-width:550px;animation:fadeSlideUp .8s .6s both}
+.hero-buttons{display:flex;gap:16px;flex-wrap:wrap;animation:fadeSlideUp .8s .8s both}
+.hero-stats{display:flex;gap:48px;margin-top:60px;padding-top:40px;border-top:1px solid rgba(255,255,255,.08);animation:fadeIn 1s 1s both}
+.hero-stat h3{font-size:2.2rem;color:var(--red);animation:countUp .6s 1.2s both}
 .hero-stat p{color:var(--text-muted);font-size:.85rem;text-transform:uppercase;letter-spacing:1px}
-.hero-accent{position:absolute;right:-100px;top:50%;transform:translateY(-50%);width:500px;height:500px;border:2px solid rgba(230,57,70,.08);border-radius:50%;pointer-events:none}
+.hero-accent{position:absolute;right:-100px;top:50%;transform:translateY(-50%);width:500px;height:500px;border:2px solid rgba(230,57,70,.08);border-radius:50%;pointer-events:none;z-index:2;animation:pulse 4s infinite}
 .hero-accent::after{content:'';position:absolute;right:-60px;top:-60px;width:620px;height:620px;border:1px solid rgba(230,57,70,.04);border-radius:50%}
+
+/* PHOTO GALLERY STRIP */
+.photo-strip{padding:0;background:var(--bg);overflow:hidden}
+.photo-strip-inner{display:flex;gap:0;width:100%}
+.photo-strip-item{flex:1;height:280px;overflow:hidden;position:relative}
+.photo-strip-item img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.4,0,.2,1),filter .4s;filter:brightness(.7) saturate(.9)}
+.photo-strip-item:hover img{transform:scale(1.12);filter:brightness(.9) saturate(1.1)}
+.photo-strip-item::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(17,17,17,.6) 0%,transparent 50%);pointer-events:none}
 
 /* SERVICES */
 .services{padding:100px 0;background:var(--bg)}
 .services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:24px}
-.service-card{background:var(--bg-card);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);padding:32px 28px;transition:all .3s;position:relative;overflow:hidden}
-.service-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .3s}
-.service-card:hover{transform:translateY(-4px);border-color:rgba(230,57,70,.2)}
+.service-card{background:var(--bg-card);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);padding:32px 28px;transition:all .4s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden}
+.service-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.service-card::after{content:'';position:absolute;inset:0;border-radius:var(--radius);opacity:0;transition:opacity .4s;box-shadow:0 0 30px rgba(230,57,70,.2),inset 0 0 30px rgba(230,57,70,.03);pointer-events:none}
+.service-card:hover{transform:translateY(-8px);border-color:rgba(230,57,70,.3)}
 .service-card:hover::before{transform:scaleX(1)}
-.service-icon{width:52px;height:52px;background:rgba(230,57,70,.1);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;margin-bottom:20px;font-size:1.5rem}
+.service-card:hover::after{opacity:1}
+.service-icon{width:52px;height:52px;background:rgba(230,57,70,.1);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;margin-bottom:20px;font-size:1.5rem;transition:transform .3s,background .3s}
+.service-card:hover .service-icon{transform:scale(1.15) rotate(5deg);background:rgba(230,57,70,.2)}
 .service-card h3{font-size:1.25rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
 .service-card p{color:var(--text-muted);font-size:.9rem;line-height:1.7}
 
 /* TRUST */
-.trust{padding:80px 0;background:var(--bg-light);border-top:1px solid rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.05)}
+.trust{padding:80px 0;background:var(--bg-light);border-top:1px solid rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.05);overflow:hidden}
 .trust-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:32px;text-align:center}
-.trust-item{padding:40px 24px}
-.trust-icon{font-size:3rem;margin-bottom:16px}
+.trust-item{padding:40px 24px;transition:all .4s;border-radius:var(--radius)}
+.trust-item:hover{background:rgba(230,57,70,.05)}
+.trust-icon{font-size:3rem;margin-bottom:16px;display:inline-block;animation:float 3s ease-in-out infinite}
+.trust-item:nth-child(2) .trust-icon{animation-delay:.5s}
+.trust-item:nth-child(3) .trust-icon{animation-delay:1s}
+.trust-item:nth-child(4) .trust-icon{animation-delay:1.5s}
 .trust-item h3{font-size:1.3rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
 .trust-item p{color:var(--text-muted);font-size:.9rem}
+/* shimmer badge bar under trust */
+.trust-shimmer{height:3px;background:linear-gradient(90deg,transparent,var(--red),transparent);background-size:200% 100%;animation:shimmer 3s infinite linear}
 
 /* WHY US */
 .why-us{padding:100px 0;background:var(--bg)}
 .why-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
 .why-features{display:flex;flex-direction:column;gap:28px}
-.why-feature{display:flex;gap:20px}
-.why-feature-icon{flex-shrink:0;width:48px;height:48px;background:rgba(230,57,70,.1);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:var(--red)}
+.why-feature{display:flex;gap:20px;transition:transform .3s}
+.why-feature:hover{transform:translateX(8px)}
+.why-feature-icon{flex-shrink:0;width:48px;height:48px;background:rgba(230,57,70,.1);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:var(--red);transition:transform .3s,background .3s}
+.why-feature:hover .why-feature-icon{transform:rotate(10deg) scale(1.1);background:rgba(230,57,70,.2)}
 .why-feature h4{font-size:1.1rem;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px}
 .why-feature p{color:var(--text-muted);font-size:.9rem}
-.why-image{background:var(--bg-card);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);padding:48px;text-align:center;position:relative}
-.why-image-text{font-family:'Rajdhani',sans-serif;font-size:6rem;font-weight:700;color:var(--red);opacity:.15;line-height:1}
-.why-image-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.why-image-overlay h3{font-size:2rem;text-transform:uppercase;letter-spacing:2px}
-.why-image-overlay p{color:var(--text-muted);font-size:1rem;margin-top:4px}
+.why-image-wrapper{position:relative;border-radius:var(--radius);overflow:hidden;height:480px;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.why-image-wrapper img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.4,0,.2,1);filter:brightness(.8)}
+.why-image-wrapper:hover img{transform:scale(1.08)}
+.why-image-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(17,17,17,.85) 0%,rgba(17,17,17,.2) 50%,transparent 100%);display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:40px;text-align:center}
+.why-image-overlay h3{font-size:2.2rem;text-transform:uppercase;letter-spacing:3px}
+.why-image-overlay p{color:var(--text-muted);font-size:1.1rem;margin-top:4px}
 
 /* REVIEWS */
 .reviews{padding:100px 0;background:var(--bg-light);border-top:1px solid rgba(255,255,255,.05)}
 .reviews-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:24px}
-.review-card{background:var(--bg-card);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);padding:32px}
+.review-card{background:var(--bg-card);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);padding:32px;transition:all .4s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden}
+.review-card::after{content:'';position:absolute;inset:0;border-radius:var(--radius);opacity:0;transition:opacity .4s;box-shadow:0 0 35px rgba(230,57,70,.15);pointer-events:none}
+.review-card:hover{transform:translateY(-6px);border-color:rgba(230,57,70,.2)}
+.review-card:hover::after{opacity:1}
 .review-stars{color:var(--gold);font-size:1.1rem;letter-spacing:2px;margin-bottom:16px}
 .review-text{color:var(--text-muted);font-size:.95rem;line-height:1.8;margin-bottom:20px;font-style:italic}
 .review-author{display:flex;align-items:center;gap:12px}
-.review-avatar{width:44px;height:44px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1.1rem}
+.review-avatar{width:48px;height:48px;border-radius:50%;overflow:hidden;border:2px solid var(--red);flex-shrink:0}
+.review-avatar img{width:100%;height:100%;object-fit:cover}
 .review-name{font-weight:700;font-size:.95rem}
 .review-date{color:var(--text-muted);font-size:.8rem}
 
@@ -110,15 +165,18 @@ nav.scrolled{box-shadow:0 2px 20px rgba(0,0,0,.5)}
 .contact{padding:100px 0;background:var(--bg)}
 .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px}
 .form-group{margin-bottom:20px}
-.form-group label{display:block;font-size:.85rem;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;color:var(--text-muted)}
-.form-group input,.form-group select,.form-group textarea{width:100%;padding:14px 18px;background:var(--bg-card);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius);color:var(--text);font-family:'Open Sans',sans-serif;font-size:.95rem;transition:border-color .3s}
-.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--red)}
+.form-group label{display:block;font-size:.85rem;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;color:var(--text-muted);transition:color .3s}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:14px 18px;background:var(--bg-card);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius);color:var(--text);font-family:'Open Sans',sans-serif;font-size:.95rem;transition:border-color .3s,box-shadow .3s,transform .2s}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--red);box-shadow:0 0 20px rgba(230,57,70,.15);transform:scale(1.01)}
+.form-group:focus-within label{color:var(--red)}
 .form-group textarea{resize:vertical;min-height:120px}
 .form-group select{cursor:pointer;appearance:none;background-image:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23adb5bd" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>');background-repeat:no-repeat;background-position:right 14px center;background-size:18px}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 .contact-info h3{font-size:1.8rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:24px}
-.contact-info-item{display:flex;gap:16px;margin-bottom:28px}
-.contact-info-icon{flex-shrink:0;width:44px;height:44px;background:rgba(230,57,70,.1);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;color:var(--red);font-size:1.1rem}
+.contact-info-item{display:flex;gap:16px;margin-bottom:28px;transition:transform .3s}
+.contact-info-item:hover{transform:translateX(6px)}
+.contact-info-icon{flex-shrink:0;width:44px;height:44px;background:rgba(230,57,70,.1);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;color:var(--red);font-size:1.1rem;transition:transform .3s}
+.contact-info-item:hover .contact-info-icon{transform:scale(1.15)}
 .contact-info-item h4{font-size:1rem;margin-bottom:2px}
 .contact-info-item p{color:var(--text-muted);font-size:.9rem}
 .hours-table{width:100%;margin-top:8px}
@@ -130,6 +188,11 @@ nav.scrolled{box-shadow:0 2px 20px rgba(0,0,0,.5)}
 .map-placeholder{margin-top:32px;background:var(--bg-card);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);overflow:hidden;height:200px;display:flex;align-items:center;justify-content:center}
 .map-placeholder iframe{width:100%;height:100%;border:0;filter:grayscale(.8) contrast(1.1) brightness(.7)}
 
+/* SUBMIT BTN ANIMATION */
+.btn-submit{width:100%;position:relative;overflow:hidden}
+.btn-submit::after{content:'';position:absolute;top:50%;left:50%;width:0;height:0;background:rgba(255,255,255,.15);border-radius:50%;transform:translate(-50%,-50%);transition:width .6s,height .6s}
+.btn-submit:active::after{width:400px;height:400px}
+
 /* FOOTER */
 footer{background:var(--bg-light);border-top:1px solid rgba(255,255,255,.05);padding:60px 0 0}
 .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;padding-bottom:40px}
@@ -137,8 +200,8 @@ footer{background:var(--bg-light);border-top:1px solid rgba(255,255,255,.05);pad
 .footer-heading{font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:20px;color:var(--text)}
 .footer-links{list-style:none}
 .footer-links li{margin-bottom:10px}
-.footer-links a{color:var(--text-muted);font-size:.9rem;transition:color .2s}
-.footer-links a:hover{color:var(--red)}
+.footer-links a{color:var(--text-muted);font-size:.9rem;transition:color .2s,transform .2s;display:inline-block}
+.footer-links a:hover{color:var(--red);transform:translateX(4px)}
 .footer-bottom{border-top:1px solid rgba(255,255,255,.05);padding:20px 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;font-size:.85rem;color:var(--text-muted)}
 
 /* MOBILE */
@@ -150,6 +213,9 @@ footer{background:var(--bg-light);border-top:1px solid rgba(255,255,255,.05);pad
   .why-grid,.contact-grid{grid-template-columns:1fr}
   .footer-grid{grid-template-columns:1fr 1fr}
   .reviews-grid{grid-template-columns:1fr}
+  .photo-strip-inner{flex-wrap:wrap}
+  .photo-strip-item{flex:1 1 50%;height:200px}
+  .why-image-wrapper{height:350px}
 }
 @media(max-width:600px){
   .hero-buttons{flex-direction:column}
@@ -159,6 +225,7 @@ footer{background:var(--bg-light);border-top:1px solid rgba(255,255,255,.05);pad
   .footer-grid{grid-template-columns:1fr}
   .footer-bottom{flex-direction:column;text-align:center}
   .services-grid{grid-template-columns:1fr}
+  .photo-strip-item{flex:1 1 100%;height:180px}
 }
 </style>
 </head>
@@ -181,9 +248,10 @@ footer{background:var(--bg-light);border-top:1px solid rgba(255,255,255,.05);pad
   </div>
 </nav>
 
-<!-- HERO -->
+<!-- HERO with real parallax photo -->
 <section class="hero" id="home">
-  <div class="hero-bg"></div>
+  <img src="https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=1920&q=80" alt="Auto repair garage interior" class="hero-bg-img" loading="eager">
+  <div class="hero-grid-overlay"></div>
   <div class="hero-accent"></div>
   <div class="container">
     <div class="hero-content">
@@ -196,11 +264,11 @@ footer{background:var(--bg-light);border-top:1px solid rgba(255,255,255,.05);pad
       </div>
       <div class="hero-stats">
         <div class="hero-stat">
-          <h3>35+</h3>
+          <h3 data-count="35">0</h3>
           <p>Years in Business</p>
         </div>
         <div class="hero-stat">
-          <h3>15K+</h3>
+          <h3 data-count="15000">0</h3>
           <p>Vehicles Serviced</p>
         </div>
         <div class="hero-stat">
@@ -212,50 +280,68 @@ footer{background:var(--bg-light);border-top:1px solid rgba(255,255,255,.05);pad
   </div>
 </section>
 
+<!-- PHOTO STRIP -->
+<section class="photo-strip">
+  <div class="photo-strip-inner">
+    <div class="photo-strip-item">
+      <img src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=600&q=80" alt="Mechanic working on vehicle" loading="lazy">
+    </div>
+    <div class="photo-strip-item">
+      <img src="https://images.unsplash.com/photo-1530046339160-ce3e530c7d2f?w=600&q=80" alt="Engine repair close-up" loading="lazy">
+    </div>
+    <div class="photo-strip-item">
+      <img src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=600&q=80" alt="Car on hydraulic lift" loading="lazy">
+    </div>
+    <div class="photo-strip-item">
+      <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=600&q=80" alt="Premium car exterior" loading="lazy">
+    </div>
+  </div>
+</section>
+
 <!-- SERVICES -->
 <section class="services" id="services">
   <div class="container">
-    <div style="text-align:center;margin-bottom:60px">
+    <div style="text-align:center;margin-bottom:60px" class="reveal">
       <h2 class="section-title">Our <span>Services</span></h2>
       <p class="section-subtitle">Complete auto care from routine maintenance to major repairs</p>
     </div>
-    <div class="services-grid">
-      <div class="service-card">
+    <div class="services-grid stagger-children">
+      <div class="service-card reveal">
         <div class="service-icon">&#128267;</div>
         <h3>Oil Change</h3>
         <p>Conventional, synthetic blend, and full synthetic oil changes with multi-point inspection included.</p>
       </div>
-      <div class="service-card">
+      <div class="service-card reveal">
         <div class="service-icon">&#9899;</div>
         <h3>Brake Service</h3>
         <p>Brake pads, rotors, calipers, and fluid flush. We ensure your stopping power is always at its best.</p>
       </div>
-      <div class="service-card">
+      <div class="service-card reveal">
         <div class="service-icon">&#9881;&#65039;</div>
         <h3>Engine Repair</h3>
         <p>From tune-ups to complete engine rebuilds, our certified technicians handle it all.</p>
       </div>
-      <div class="service-card">
+      <div class="service-card reveal">
         <div class="service-icon">&#128260;</div>
         <h3>Transmission</h3>
         <p>Fluid services, repairs, and rebuilds for both automatic and manual transmissions.</p>
       </div>
-      <div class="service-card">
+      <div class="service-card reveal">
         <div class="service-icon">&#11044;</div>
         <h3>Tires</h3>
         <p>New tires, mounting, balancing, rotation, alignment, and flat repair services.</p>
       </div>
-      <div class="service-card">
+      <div class="service-card reveal">
         <div class="service-icon">&#128187;</div>
         <h3>Diagnostics</h3>
         <p>State-of-the-art computer diagnostics to pinpoint issues quickly and accurately.</p>
       </div>
-      <div class="service-card">
+      <div class="service-card reveal">
         <div class="service-icon">&#10052;&#65039;</div>
         <h3>AC / Heating</h3>
         <p>Full climate system service including recharge, compressor repair, and heater core replacement.</p>
       </div>
-      <div class="service-card">
+      <div class="service-card reveal">
         <div class="service-icon">&#9989;</div>
         <h3>NJ State Inspection</h3>
         <p>Licensed NJ State Inspection station. Quick, convenient, and thorough inspections.</p>
@@ -267,36 +353,37 @@ footer{background:var(--bg-light);border-top:1px solid rgba(255,255,255,.05);pad
 <!-- TRUST BADGES -->
 <section class="trust" id="trust">
   <div class="container">
-    <div class="trust-grid">
-      <div class="trust-item">
+    <div class="trust-grid stagger-children">
+      <div class="trust-item reveal">
         <div class="trust-icon">&#127942;</div>
         <h3>ASE Certified</h3>
         <p>Our technicians hold current ASE certifications across all major automotive systems.</p>
       </div>
-      <div class="trust-item">
+      <div class="trust-item reveal">
         <div class="trust-icon">&#11088;</div>
         <h3>BBB A+ Rating</h3>
         <p>Accredited by the Better Business Bureau with their highest rating for trust and service.</p>
       </div>
-      <div class="trust-item">
+      <div class="trust-item reveal">
         <div class="trust-icon">&#128197;</div>
         <h3>35+ Years</h3>
         <p>Proudly serving the Edison community and surrounding areas since 1987.</p>
       </div>
-      <div class="trust-item">
+      <div class="trust-item reveal">
         <div class="trust-icon">&#128106;</div>
         <h3>Family Owned</h3>
         <p>A true family business built on personal relationships and old-fashioned integrity.</p>
       </div>
     </div>
   </div>
+  <div class="trust-shimmer"></div>
 </section>
 
 <!-- WHY US -->
 <section class="why-us" id="why-us">
   <div class="container">
     <div class="why-grid">
-      <div>
+      <div class="reveal-left">
         <h2 class="section-title">Why Choose <span>Ram's?</span></h2>
         <p class="section-subtitle" style="margin-bottom:36px">We treat every car like it's our own</p>
         <div class="why-features">
@@ -330,8 +417,8 @@ footer{background:var(--bg-light);border-top:1px solid rgba(255,255,255,.05);pad
           </div>
         </div>
       </div>
-      <div class="why-image">
-        <div class="why-image-text">SINCE<br>1987</div>
+      <div class="why-image-wrapper reveal-right">
+        <img src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=600&q=80" alt="Mechanic working under the hood" loading="lazy">
         <div class="why-image-overlay">
           <h3>Est. 1987</h3>
           <p>Edison, New Jersey</p>
@@ -344,38 +431,44 @@ footer{background:var(--bg-light);border-top:1px solid rgba(255,255,255,.05);pad
 <!-- REVIEWS -->
 <section class="reviews" id="reviews">
   <div class="container">
-    <div style="text-align:center;margin-bottom:60px">
+    <div style="text-align:center;margin-bottom:60px" class="reveal">
       <h2 class="section-title">What Our <span>Customers</span> Say</h2>
       <p class="section-subtitle">Real reviews from real people</p>
     </div>
-    <div class="reviews-grid">
-      <div class="review-card">
+    <div class="reviews-grid stagger-children">
+      <div class="review-card reveal">
         <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <p class="review-text">"I've been taking my cars to Ram's for over 15 years. They're always upfront about costs, never push unnecessary work, and the quality is top-notch. Best mechanic in Edison, hands down."</p>
         <div class="review-author">
-          <div class="review-avatar">MJ</div>
+          <div class="review-avatar">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80" alt="Michael J." loading="lazy">
+          </div>
           <div>
             <div class="review-name">Michael J.</div>
             <div class="review-date">Google Review</div>
           </div>
         </div>
       </div>
-      <div class="review-card">
+      <div class="review-card reveal">
         <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <p class="review-text">"Brought my car in with a check engine light and they diagnosed the issue within an hour. Fair price, quick turnaround, and they even washed it before I picked it up. Highly recommend!"</p>
         <div class="review-author">
-          <div class="review-avatar">SP</div>
+          <div class="review-avatar">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80" alt="Sarah P." loading="lazy">
+          </div>
           <div>
             <div class="review-name">Sarah P.</div>
             <div class="review-date">Google Review</div>
           </div>
         </div>
       </div>
-      <div class="review-card">
+      <div class="review-card reveal">
         <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <p class="review-text">"Finally found an honest mechanic! Ram and his team went above and beyond when my transmission needed work. They found a more affordable solution and saved me over $800. This is a family you can trust."</p>
         <div class="review-author">
-          <div class="review-avatar">DK</div>
+          <div class="review-avatar">
+            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80" alt="David K." loading="lazy">
+          </div>
           <div>
             <div class="review-name">David K.</div>
             <div class="review-date">Google Review</div>
@@ -389,12 +482,12 @@ footer{background:var(--bg-light);border-top:1px solid rgba(255,255,255,.05);pad
 <!-- CONTACT / FORM -->
 <section class="contact" id="contact">
   <div class="container">
-    <div style="text-align:center;margin-bottom:60px">
+    <div style="text-align:center;margin-bottom:60px" class="reveal">
       <h2 class="section-title">Request <span>Service</span></h2>
       <p class="section-subtitle">Fill out the form below and we'll get back to you promptly</p>
     </div>
     <div class="contact-grid">
-      <form id="serviceForm" onsubmit="handleSubmit(event)">
+      <form id="serviceForm" onsubmit="handleSubmit(event)" class="reveal-left">
         <div class="form-row">
           <div class="form-group">
             <label for="name">Full Name</label>
@@ -434,11 +527,11 @@ footer{background:var(--bg-light);border-top:1px solid rgba(255,255,255,.05);pad
           <label for="message">Describe the Issue</label>
           <textarea id="message" name="message" placeholder="Tell us what's going on with your vehicle..."></textarea>
         </div>
-        <button type="submit" class="btn" style="width:100%">Submit Service Request</button>
+        <button type="submit" class="btn btn-submit">Submit Service Request</button>
         <div id="formMessage" style="margin-top:16px;text-align:center;display:none;padding:14px;border-radius:var(--radius);font-weight:600"></div>
       </form>
 
-      <div class="contact-info">
+      <div class="contact-info reveal-right">
         <h3>Get In Touch</h3>
         <div class="contact-info-item">
           <div class="contact-info-icon">&#128205;</div>
@@ -545,16 +638,86 @@ navLinks.querySelectorAll('a').forEach(link => {
   });
 });
 
+// Hero parallax on scroll
+const heroBgImg = document.querySelector('.hero-bg-img');
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY;
+  if (scrolled < window.innerHeight) {
+    heroBgImg.style.transform = 'scale(1.1) translateY(' + (scrolled * 0.3) + 'px)';
+  }
+});
+
+// Scroll reveal observer
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => {
+  revealObserver.observe(el);
+});
+
+// Animated number counter for hero stats
+function animateCount(el, target, suffix) {
+  const duration = 2000;
+  const start = performance.now();
+  const format = target >= 1000;
+  function update(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const current = Math.floor(eased * target);
+    if (format) {
+      el.textContent = (current / 1000).toFixed(current >= target ? 0 : 1).replace(/\.0$/, '') + 'K+';
+    } else {
+      el.textContent = current + '+';
+    }
+    if (progress < 1) requestAnimationFrame(update);
+    else {
+      if (format) el.textContent = Math.floor(target / 1000) + 'K+';
+      else el.textContent = target + '+';
+    }
+  }
+  requestAnimationFrame(update);
+}
+
+const statsObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const h3s = entry.target.querySelectorAll('[data-count]');
+      h3s.forEach(h3 => {
+        const target = parseInt(h3.dataset.count);
+        animateCount(h3, target);
+      });
+      statsObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.5 });
+
+const heroStats = document.querySelector('.hero-stats');
+if (heroStats) statsObserver.observe(heroStats);
+
 // Form handling
 function handleSubmit(e) {
   e.preventDefault();
-  const msg = document.getElementById('formMessage');
-  msg.style.display = 'block';
-  msg.style.background = 'rgba(230,57,70,.15)';
-  msg.style.color = '#4caf50';
-  msg.textContent = 'Thank you! Your service request has been submitted. We\'ll contact you shortly.';
-  e.target.reset();
-  setTimeout(() => { msg.style.display = 'none'; }, 6000);
+  const btn = e.target.querySelector('.btn-submit');
+  btn.textContent = 'Sending...';
+  btn.style.opacity = '.7';
+  setTimeout(() => {
+    const msg = document.getElementById('formMessage');
+    msg.style.display = 'block';
+    msg.style.background = 'rgba(76,175,80,.15)';
+    msg.style.color = '#4caf50';
+    msg.style.animation = 'fadeSlideUp .5s both';
+    msg.textContent = 'Thank you! Your service request has been submitted. We\'ll contact you shortly.';
+    btn.textContent = 'Submit Service Request';
+    btn.style.opacity = '1';
+    e.target.reset();
+    setTimeout(() => { msg.style.display = 'none'; }, 6000);
+  }, 800);
 }
 
 // Smooth scroll for anchor links
@@ -568,21 +731,17 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
-// Scroll reveal animation
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.style.opacity = '1';
-      entry.target.style.transform = 'translateY(0)';
-    }
+// Tilt effect on service cards
+document.querySelectorAll('.service-card').forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    card.style.transform = 'translateY(-8px) perspective(600px) rotateX(' + (-y * 6) + 'deg) rotateY(' + (x * 6) + 'deg)';
   });
-}, { threshold: 0.1 });
-
-document.querySelectorAll('.service-card, .review-card, .trust-item, .why-feature').forEach(el => {
-  el.style.opacity = '0';
-  el.style.transform = 'translateY(20px)';
-  el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-  observer.observe(el);
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+  });
 });
 </script>
 </body>
