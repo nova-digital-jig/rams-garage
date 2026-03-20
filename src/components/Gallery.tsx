@@ -1,98 +1,59 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 
-gsap.registerPlugin(ScrollTrigger);
-
-const GALLERY_ITEMS = [
-  {
-    src: "https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=600&q=80",
-    alt: "Mechanic performing engine repair",
-    label: "Engine Work",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&q=80",
-    alt: "Brake inspection and repair service",
-    label: "Brake Service",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1530046339160-ce3e530c7d2f?w=600&q=80",
-    alt: "Tire mounting and balancing",
-    label: "Tire Service",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=600&q=80",
-    alt: "Diagnostic computer connected to vehicle",
-    label: "Diagnostics",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1625047509248-ec889cbff17f?w=600&q=80",
-    alt: "Oil change service being performed",
-    label: "Oil Changes",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1632823471565-1ecdf5c6da20?w=600&q=80",
-    alt: "Clean auto repair shop bay",
-    label: "Our Shop",
-  },
+const images = [
+  { src: "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=600&q=80", alt: "Engine repair" },
+  { src: "https://images.unsplash.com/photo-1530046339160-ce3e530c7d2f?w=600&q=80", alt: "Brake service" },
+  { src: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=600&q=80", alt: "Vehicle exterior" },
+  { src: "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=600&q=80", alt: "Under car repair" },
+  { src: "https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=600&q=80", alt: "Shop interior" },
+  { src: "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=600&q=80", alt: "Diagnostic work" },
 ];
 
 export default function Gallery() {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const prefersReduced = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-    if (prefersReduced) return;
-
-    const ctx = gsap.context(() => {
-      const items = sectionRef.current?.querySelectorAll(".gallery__item");
-      if (!items) return;
-
-      items.forEach((item, i) => {
-        gsap.from(item, {
-          y: 40,
-          opacity: 0,
-          duration: 0.7,
-          delay: i * 0.1,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: item,
-            start: "top 90%",
-          },
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add("visible");
         });
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
+      },
+      { threshold: 0.1 }
+    );
+    el.querySelectorAll(".fade-up").forEach((child) => observer.observe(child));
+    return () => observer.disconnect();
   }, []);
 
   return (
-    <section className="gallery" ref={sectionRef}>
-      <div className="gallery__header">
-        <p className="gallery__label">Our Work</p>
-        <h2 className="gallery__title">Inside the Shop</h2>
-      </div>
+    <section ref={sectionRef} className="bg-gray-light py-20 sm:py-28">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <h2 className="fade-up font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-charcoal uppercase text-center mb-14">
+          Our Work
+        </h2>
 
-      <div className="gallery__grid">
-        {GALLERY_ITEMS.map((item, i) => (
-          <div className="gallery__item" key={i}>
-            <Image
-              src={item.src}
-              alt={item.alt}
-              fill
-              sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 33vw"
-              style={{ objectFit: "cover" }}
-            />
-            <div className="gallery__overlay">
-              <span className="gallery__overlay-text">{item.label}</span>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {images.map((image, i) => (
+            <div
+              key={image.src}
+              className={`fade-up fade-up-delay-${(i % 4) + 1} relative aspect-[4/3] rounded-xl overflow-hidden group cursor-pointer`}
+            >
+              <Image
+                src={image.src}
+                alt={image.alt}
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-110"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              />
+              <div className="absolute inset-0 bg-charcoal/0 group-hover:bg-charcoal/30 transition-colors duration-300" />
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );

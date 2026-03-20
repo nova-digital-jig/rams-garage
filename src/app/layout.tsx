@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
-import { Syne, Plus_Jakarta_Sans } from "next/font/google";
+import { Oswald, Inter } from "next/font/google";
 import "./globals.css";
 
-const syne = Syne({
+const oswald = Oswald({
   subsets: ["latin"],
-  weight: ["700", "800"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-display",
   display: "swap",
 });
 
-const plusJakarta = Plus_Jakarta_Sans({
+const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-body",
@@ -37,13 +37,8 @@ export const metadata: Metadata = {
     description:
       "Honest Repairs. Fair Prices. Since 1987. ASE Certified, A+ BBB Rated.",
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
-  alternates: {
-    canonical: "https://ramsgarage.com",
-  },
+  robots: { index: true, follow: true },
+  alternates: { canonical: "https://ramsgarage.com" },
 };
 
 const jsonLd = {
@@ -53,7 +48,7 @@ const jsonLd = {
   image: "https://ramsgarage.com/og-image.jpg",
   url: "https://ramsgarage.com",
   telephone: "(732) 555-0187",
-  email: "ramsgarage@example.com",
+  email: "info@ramsgarage.com",
   address: {
     "@type": "PostalAddress",
     streetAddress: "123 Main St",
@@ -87,17 +82,8 @@ const jsonLd = {
     reviewCount: "280",
   },
   priceRange: "$$",
-  areaServed: [
-    "Edison",
-    "Metuchen",
-    "Woodbridge",
-    "Piscataway",
-    "Middlesex County",
-  ],
-  founder: {
-    "@type": "Person",
-    name: "Ram Patel",
-  },
+  areaServed: ["Edison", "Metuchen", "Woodbridge", "Piscataway", "Middlesex County"],
+  founder: { "@type": "Person", name: "Ram Patel" },
   foundingDate: "1987",
   description:
     "Family-owned auto repair shop serving Edison, NJ since 1987. ASE Certified mechanics, A+ BBB rated.",
@@ -105,30 +91,10 @@ const jsonLd = {
     "@type": "OfferCatalog",
     name: "Auto Repair Services",
     itemListElement: [
-      {
-        "@type": "Offer",
-        itemOffered: { "@type": "Service", name: "Oil Change" },
-        price: "39.99",
-        priceCurrency: "USD",
-      },
-      {
-        "@type": "Offer",
-        itemOffered: { "@type": "Service", name: "Brake Repair" },
-        price: "149.00",
-        priceCurrency: "USD",
-      },
-      {
-        "@type": "Offer",
-        itemOffered: { "@type": "Service", name: "Engine Diagnostics" },
-        price: "89.00",
-        priceCurrency: "USD",
-      },
-      {
-        "@type": "Offer",
-        itemOffered: { "@type": "Service", name: "NJ State Inspection" },
-        price: "50.00",
-        priceCurrency: "USD",
-      },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Oil Change" }, price: "39.99", priceCurrency: "USD" },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Brake Repair" }, price: "149.00", priceCurrency: "USD" },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Engine Diagnostics" }, price: "89.00", priceCurrency: "USD" },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "NJ State Inspection" }, price: "50.00", priceCurrency: "USD" },
     ],
   },
 };
@@ -139,7 +105,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${syne.variable} ${plusJakarta.variable}`}>
+    <html lang="en" className={`${oswald.variable} ${inter.variable}`}>
       <head>
         <script
           type="application/ld+json"

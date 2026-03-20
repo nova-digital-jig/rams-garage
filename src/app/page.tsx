@@ -1,40 +1,27 @@
-"use client";
-
-import { useState, useCallback } from "react";
-import Preloader from "@/components/Preloader";
-import SmoothScroll from "@/components/SmoothScroll";
-import CustomCursor from "@/components/CustomCursor";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import Marquee from "@/components/Marquee";
+import EmergencyBanner from "@/components/EmergencyBanner";
 import Services from "@/components/Services";
+import WhyChooseUs from "@/components/WhyChooseUs";
 import About from "@/components/About";
 import Gallery from "@/components/Gallery";
-import Testimonials from "@/components/Testimonials";
-import CTA from "@/components/CTA";
+import Reviews from "@/components/Reviews";
+import ContactCTA from "@/components/ContactCTA";
 import Footer from "@/components/Footer";
 
 export default function Home() {
-  const [preloaderDone, setPreloaderDone] = useState(false);
-
-  const handlePreloaderComplete = useCallback(() => {
-    setPreloaderDone(true);
-  }, []);
-
   return (
     <>
-      {!preloaderDone && <Preloader onComplete={handlePreloaderComplete} />}
-      <SmoothScroll />
-      <CustomCursor />
       <Navbar />
       <main>
         <Hero />
-        <Marquee />
+        <EmergencyBanner />
         <Services />
+        <WhyChooseUs />
         <About />
         <Gallery />
-        <Testimonials />
-        <CTA />
+        <Reviews />
+        <ContactCTA />
       </main>
       <Footer />
     </>

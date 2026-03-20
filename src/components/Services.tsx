@@ -1,51 +1,65 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import {
+  Droplets,
+  Disc,
+  Cpu,
+  ClipboardCheck,
+  Cog,
+  Thermometer,
+  Car,
+  Wrench,
+} from "lucide-react";
 
-gsap.registerPlugin(ScrollTrigger);
-
-const SERVICES = [
+const services = [
   {
-    name: "Oil Changes",
-    desc: "Conventional & synthetic oil changes with multi-point inspection",
-    price: "$39.99",
+    icon: Droplets,
+    name: "Oil Change",
+    description: "Conventional & synthetic oil changes with filter replacement",
+    price: "From $39.99",
   },
   {
+    icon: Disc,
     name: "Brake Repair",
-    desc: "Pads, rotors, calipers, and complete brake system service",
+    description: "Pads, rotors, calipers — complete brake system service",
     price: "From $149",
   },
   {
+    icon: Cpu,
     name: "Engine Diagnostics",
-    desc: "Computer diagnostics, check engine light, performance tuning",
-    price: "$89",
+    description: "Computer diagnostics to pinpoint check engine light issues",
+    price: "From $89",
   },
   {
-    name: "Transmission Service",
-    desc: "Fluid flush, filter replacement, and complete transmission repair",
-    price: "From $199",
-  },
-  {
-    name: "Tire Sales & Service",
-    desc: "New tires, mounting, balancing, rotation, and alignment",
-    price: "From $79/tire",
-  },
-  {
+    icon: ClipboardCheck,
     name: "NJ State Inspection",
-    desc: "Official NJ Motor Vehicle inspection station",
+    description: "Official NJ state emissions & safety inspection station",
     price: "$50",
   },
   {
-    name: "AC Repair",
-    desc: "Recharge, leak detection, compressor and full system repair",
-    price: "From $129",
+    icon: Cog,
+    name: "Transmission Service",
+    description: "Fluid flush, filter replacement & transmission repair",
+    price: "From $179",
   },
   {
-    name: "Suspension & Steering",
-    desc: "Shocks, struts, ball joints, tie rods, and alignment",
-    price: "From $179",
+    icon: Thermometer,
+    name: "A/C & Heating",
+    description: "Refrigerant recharge, compressor repair & heater core service",
+    price: "From $99",
+  },
+  {
+    icon: Car,
+    name: "Tire Services",
+    description: "Rotation, balancing, alignment & new tire installation",
+    price: "From $25",
+  },
+  {
+    icon: Wrench,
+    name: "General Repair",
+    description: "Suspension, exhaust, electrical, belts & hoses and more",
+    price: "Call for Quote",
   },
 ];
 
@@ -53,81 +67,65 @@ export default function Services() {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const prefersReduced = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-    if (prefersReduced) return;
-
-    const rows = sectionRef.current?.querySelectorAll(".service-row");
-    const header = sectionRef.current?.querySelector(".services__header");
-    if (!rows || !header) return;
-
-    gsap.from(header, {
-      y: 40,
-      opacity: 0,
-      duration: 0.8,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: header,
-        start: "top 85%",
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
       },
-    });
-
-    rows.forEach((row, i) => {
-      gsap.from(row, {
-        y: 30,
-        opacity: 0,
-        duration: 0.6,
-        delay: i * 0.08,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: row,
-          start: "top 90%",
-        },
-      });
-    });
-
-    return () => {
-      ScrollTrigger.getAll().forEach((st) => st.kill());
-    };
+      { threshold: 0.1 }
+    );
+    el.querySelectorAll(".fade-up").forEach((child) => observer.observe(child));
+    return () => observer.disconnect();
   }, []);
 
   return (
-    <section className="services" id="services" ref={sectionRef}>
-      <div className="services__header">
-        <p className="services__label">What We Do</p>
-        <h2 className="services__title">Our Services</h2>
-      </div>
-
-      {SERVICES.map((service, i) => (
-        <div className="service-row" key={i}>
-          <span className="service-row__number">
-            {String(i + 1).padStart(2, "0")}
-          </span>
-          <div className="service-row__info">
-            <span className="service-row__name">{service.name}</span>
-            <span className="service-row__desc">{service.desc}</span>
-          </div>
-          <div className="service-row__right">
-            <span className="service-row__price">{service.price}</span>
-            <span className="service-row__arrow">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
-              </svg>
-            </span>
-          </div>
+    <section
+      id="services"
+      ref={sectionRef}
+      className="bg-charcoal py-20 sm:py-28"
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        {/* Header */}
+        <div className="fade-up text-center mb-14">
+          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white uppercase mb-3">
+            Our Services
+          </h2>
+          <p className="text-text-muted text-lg max-w-xl mx-auto">
+            Full-service auto repair for all makes and models
+          </p>
         </div>
-      ))}
+
+        {/* Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {services.map((service, i) => {
+            const Icon = service.icon;
+            return (
+              <div
+                key={service.name}
+                className={`fade-up fade-up-delay-${(i % 4) + 1} group bg-charcoal-light border border-gray-medium/30 rounded-lg p-6 hover:border-t-amber hover:border-t-2 hover:-translate-y-1 transition-all duration-300 cursor-pointer`}
+              >
+                <div className="w-12 h-12 rounded-lg bg-amber/10 flex items-center justify-center mb-4 group-hover:bg-amber/20 transition-colors">
+                  <Icon className="w-6 h-6 text-amber" />
+                </div>
+                <h3 className="font-display text-lg font-bold text-white uppercase mb-2">
+                  {service.name}
+                </h3>
+                <p className="text-text-muted text-sm leading-relaxed mb-4">
+                  {service.description}
+                </p>
+                <span className="font-display font-bold text-amber text-sm">
+                  {service.price}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </section>
   );
 }
