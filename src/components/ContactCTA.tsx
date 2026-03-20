@@ -1,44 +1,63 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import { Phone, MapPin, Clock } from "lucide-react";
+import { motion } from "framer-motion";
+import {
+  clipReveal,
+  itemVariants,
+  containerVariants,
+  viewportOnce,
+  prefersReducedMotion,
+} from "@/lib/animations";
+
+const formSlideUp = {
+  hidden: { opacity: 0, y: 60 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] as const },
+  },
+};
 
 export default function ContactCTA() {
-  const sectionRef = useRef<HTMLElement>(null);
+  const [reduced, setReduced] = useState(false);
 
   useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add("visible");
-        });
-      },
-      { threshold: 0.1 }
-    );
-    el.querySelectorAll(".fade-up").forEach((child) => observer.observe(child));
-    return () => observer.disconnect();
+    setReduced(prefersReducedMotion());
   }, []);
 
   return (
-    <section id="contact" ref={sectionRef} className="bg-charcoal py-20 sm:py-28">
+    <section id="contact" className="bg-charcoal py-20 sm:py-28">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
           {/* Left — CTA + Info */}
-          <div>
-            <h2 className="fade-up font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white uppercase leading-tight mb-4">
+          <motion.div
+            variants={containerVariants}
+            initial={reduced ? false : "hidden"}
+            whileInView="visible"
+            viewport={viewportOnce}
+          >
+            {/* Heading — clip-path reveal from bottom */}
+            <motion.h2
+              className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white uppercase leading-tight mb-4"
+              variants={clipReveal}
+            >
               Ready to Get Your Car Fixed?
-            </h2>
-            <p className="fade-up fade-up-delay-1 text-text-muted text-lg mb-6">
+            </motion.h2>
+            <motion.p
+              className="text-text-muted text-lg mb-6"
+              variants={itemVariants}
+            >
               Car trouble? Don&apos;t wait. Call now or fill out the form and we&apos;ll get you
               back on the road fast.
-            </p>
+            </motion.p>
 
-            {/* Giant phone number */}
-            <a
+            {/* Giant phone number — fades up after heading */}
+            <motion.a
               href="tel:7325550187"
-              className="fade-up fade-up-delay-2 inline-flex items-center gap-3 mb-10"
+              className="inline-flex items-center gap-3 mb-10"
+              variants={itemVariants}
             >
               <div className="w-14 h-14 rounded-full bg-amber flex items-center justify-center">
                 <Phone className="w-6 h-6 text-charcoal" />
@@ -46,10 +65,10 @@ export default function ContactCTA() {
               <span className="font-display text-3xl sm:text-4xl font-bold text-amber">
                 (732) 555-0187
               </span>
-            </a>
+            </motion.a>
 
             {/* Info */}
-            <div className="fade-up fade-up-delay-3 space-y-4">
+            <motion.div className="space-y-4" variants={itemVariants}>
               <div className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-amber mt-0.5 flex-shrink-0" />
                 <div>
@@ -66,11 +85,16 @@ export default function ContactCTA() {
                   <p className="text-text-muted text-sm">Sat: 8:00 AM – 3:00 PM · Sun: Closed</p>
                 </div>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
-          {/* Right — Form */}
-          <div className="fade-up fade-up-delay-2">
+          {/* Right — Form slides up */}
+          <motion.div
+            variants={formSlideUp}
+            initial={reduced ? false : "hidden"}
+            whileInView="visible"
+            viewport={viewportOnce}
+          >
             <form
               className="bg-charcoal-light rounded-xl p-6 sm:p-8 border border-gray-medium/30 space-y-5"
               onSubmit={(e) => e.preventDefault()}
@@ -150,11 +174,17 @@ export default function ContactCTA() {
                 Request Appointment
               </button>
             </form>
-          </div>
+          </motion.div>
         </div>
 
         {/* Map Embed */}
-        <div className="fade-up mt-12 rounded-xl overflow-hidden h-64 sm:h-80 border border-gray-medium/30">
+        <motion.div
+          className="mt-12 rounded-xl overflow-hidden h-64 sm:h-80 border border-gray-medium/30"
+          variants={itemVariants}
+          initial={reduced ? false : "hidden"}
+          whileInView="visible"
+          viewport={viewportOnce}
+        >
           <iframe
             title="Ram's Garage Location"
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d48556.89867655!2d-74.4121!3d40.5187!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c3b60e3bf4c7e5%3A0x3e1b4f8a14edcaab!2sEdison%2C%20NJ!5e0!3m2!1sen!2sus!4v1234567890"
@@ -165,7 +195,7 @@ export default function ContactCTA() {
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
           />
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -2,6 +2,15 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { motion, useScroll, useTransform } from "framer-motion";
+import {
+  slideLeft,
+  slideRight,
+  containerVariants,
+  itemVariants,
+  viewportOnce,
+  prefersReducedMotion,
+} from "@/lib/animations";
 
 function CountUp({ target, suffix = "" }: { target: number; suffix?: string }) {
   const [count, setCount] = useState(0);
@@ -49,29 +58,33 @@ const stats = [
 ];
 
 export default function About() {
-  const sectionRef = useRef<HTMLElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
+  const [reduced, setReduced] = useState(false);
 
   useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add("visible");
-        });
-      },
-      { threshold: 0.1 }
-    );
-    el.querySelectorAll(".fade-up").forEach((child) => observer.observe(child));
-    return () => observer.disconnect();
+    setReduced(prefersReducedMotion());
   }, []);
 
+  const { scrollYProgress } = useScroll({
+    target: imageRef,
+    offset: ["start end", "end start"],
+  });
+  const imageY = useTransform(scrollYProgress, [0, 1], [60, -60]);
+
   return (
-    <section id="about" ref={sectionRef} className="bg-white py-20 sm:py-28">
+    <section id="about" className="bg-white py-20 sm:py-28">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Image */}
-          <div className="fade-up relative aspect-[4/5] rounded-xl overflow-hidden">
+          {/* Image — slides from left with parallax */}
+          <motion.div
+            ref={imageRef}
+            className="relative aspect-[4/5] rounded-xl overflow-hidden"
+            variants={slideLeft}
+            initial={reduced ? false : "hidden"}
+            whileInView="visible"
+            viewport={viewportOnce}
+            style={reduced ? undefined : { y: imageY }}
+          >
             <Image
               src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=800&q=80"
               alt="Ram's Garage team at work"
@@ -79,38 +92,49 @@ export default function About() {
               className="object-cover"
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
-          </div>
+          </motion.div>
 
-          {/* Content */}
-          <div>
-            <p className="fade-up font-display text-sm font-semibold uppercase tracking-widest text-amber mb-3">
+          {/* Content — slides from right */}
+          <motion.div
+            variants={slideRight}
+            initial={reduced ? false : "hidden"}
+            whileInView="visible"
+            viewport={viewportOnce}
+          >
+            <p className="font-display text-sm font-semibold uppercase tracking-widest text-amber mb-3">
               About Us
             </p>
-            <h2 className="fade-up fade-up-delay-1 font-display text-3xl sm:text-4xl font-bold text-charcoal uppercase leading-tight mb-6">
+            <h2 className="font-display text-3xl sm:text-4xl font-bold text-charcoal uppercase leading-tight mb-6">
               Family-Owned. Community-Trusted.
             </h2>
-            <p className="fade-up fade-up-delay-2 text-gray-medium text-base sm:text-lg leading-relaxed mb-4">
+            <p className="text-gray-medium text-base sm:text-lg leading-relaxed mb-4">
               Founded by Ram Patel in 1987, Ram&apos;s Garage has been Edison&apos;s trusted auto
               repair shop for over three decades. We treat every car like our own.
             </p>
-            <p className="fade-up fade-up-delay-3 text-gray-medium text-base sm:text-lg leading-relaxed mb-10">
+            <p className="text-gray-medium text-base sm:text-lg leading-relaxed mb-10">
               Our ASE-certified mechanics combine old-school care with modern diagnostic
               technology. From routine oil changes to complex engine rebuilds, we deliver
               honest work at fair prices — every time.
             </p>
 
-            {/* Stats */}
-            <div className="fade-up fade-up-delay-4 grid grid-cols-2 sm:grid-cols-4 gap-6">
+            {/* Stats — staggered fade up */}
+            <motion.div
+              className="grid grid-cols-2 sm:grid-cols-4 gap-6"
+              variants={containerVariants}
+              initial={reduced ? false : "hidden"}
+              whileInView="visible"
+              viewport={viewportOnce}
+            >
               {stats.map((stat) => (
-                <div key={stat.label} className="text-center lg:text-left">
+                <motion.div key={stat.label} className="text-center lg:text-left" variants={itemVariants}>
                   <div className="font-display text-3xl sm:text-4xl font-bold text-charcoal">
                     <CountUp target={stat.value} suffix={stat.suffix} />
                   </div>
                   <p className="text-text-muted text-xs sm:text-sm mt-1">{stat.label}</p>
-                </div>
+                </motion.div>
               ))}
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
     </section>

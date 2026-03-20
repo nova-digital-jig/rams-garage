@@ -1,7 +1,15 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
+import {
+  containerVariants,
+  scaleReveal,
+  itemVariants,
+  viewportOnce,
+  prefersReducedMotion,
+} from "@/lib/animations";
 
 const images = [
   { src: "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=600&q=80", alt: "Engine repair" },
@@ -13,47 +21,50 @@ const images = [
 ];
 
 export default function Gallery() {
-  const sectionRef = useRef<HTMLElement>(null);
+  const [reduced, setReduced] = useState(false);
 
   useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add("visible");
-        });
-      },
-      { threshold: 0.1 }
-    );
-    el.querySelectorAll(".fade-up").forEach((child) => observer.observe(child));
-    return () => observer.disconnect();
+    setReduced(prefersReducedMotion());
   }, []);
 
   return (
-    <section ref={sectionRef} className="bg-gray-light py-20 sm:py-28">
+    <section className="bg-gray-light py-20 sm:py-28">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <h2 className="fade-up font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-charcoal uppercase text-center mb-14">
+        <motion.h2
+          className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-charcoal uppercase text-center mb-14"
+          variants={itemVariants}
+          initial={reduced ? false : "hidden"}
+          whileInView="visible"
+          viewport={viewportOnce}
+        >
           Our Work
-        </h2>
+        </motion.h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {images.map((image, i) => (
-            <div
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+          variants={containerVariants}
+          initial={reduced ? false : "hidden"}
+          whileInView="visible"
+          viewport={viewportOnce}
+        >
+          {images.map((image) => (
+            <motion.div
               key={image.src}
-              className={`fade-up fade-up-delay-${(i % 4) + 1} relative aspect-[4/3] rounded-xl overflow-hidden group cursor-pointer`}
+              className="relative aspect-[4/3] rounded-xl overflow-hidden group cursor-pointer"
+              variants={scaleReveal}
+              whileHover={reduced ? undefined : { scale: 1.05, transition: { type: "spring", stiffness: 300, damping: 20 } }}
             >
               <Image
                 src={image.src}
                 alt={image.alt}
                 fill
-                className="object-cover transition-transform duration-500 group-hover:scale-110"
+                className="object-cover transition-transform duration-500"
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               />
               <div className="absolute inset-0 bg-charcoal/0 group-hover:bg-charcoal/30 transition-colors duration-300" />
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

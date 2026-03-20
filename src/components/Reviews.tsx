@@ -1,7 +1,15 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import { Star } from "lucide-react";
+import { motion } from "framer-motion";
+import {
+  containerVariants,
+  slideRight,
+  itemVariants,
+  viewportOnce,
+  prefersReducedMotion,
+} from "@/lib/animations";
 
 const reviews = [
   {
@@ -45,28 +53,41 @@ function StarRating({ rating }: { rating: number }) {
   );
 }
 
+// Staggered slideRight for review cards
+const reviewContainerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.15, delayChildren: 0.1 },
+  },
+};
+
+const reviewCardVariants = {
+  hidden: { opacity: 0, x: 60 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] as const },
+  },
+};
+
 export default function Reviews() {
-  const sectionRef = useRef<HTMLElement>(null);
+  const [reduced, setReduced] = useState(false);
 
   useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add("visible");
-        });
-      },
-      { threshold: 0.1 }
-    );
-    el.querySelectorAll(".fade-up").forEach((child) => observer.observe(child));
-    return () => observer.disconnect();
+    setReduced(prefersReducedMotion());
   }, []);
 
   return (
-    <section id="reviews" ref={sectionRef} className="bg-white py-20 sm:py-28">
+    <section id="reviews" className="bg-white py-20 sm:py-28">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="fade-up text-center mb-14">
+        <motion.div
+          className="text-center mb-14"
+          variants={itemVariants}
+          initial={reduced ? false : "hidden"}
+          whileInView="visible"
+          viewport={viewportOnce}
+        >
           <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-charcoal uppercase mb-3">
             What Our Customers Say
           </h2>
@@ -75,13 +96,20 @@ export default function Reviews() {
             <span className="font-semibold text-charcoal">4.9</span>
             <span>out of 5 based on 280+ Google Reviews</span>
           </div>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {reviews.map((review, i) => (
-            <div
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 gap-6"
+          variants={reviewContainerVariants}
+          initial={reduced ? false : "hidden"}
+          whileInView="visible"
+          viewport={viewportOnce}
+        >
+          {reviews.map((review) => (
+            <motion.div
               key={review.name}
-              className={`fade-up fade-up-delay-${(i % 4) + 1} bg-gray-light rounded-xl p-6 sm:p-8 border border-gray-200`}
+              className="bg-gray-light rounded-xl p-6 sm:p-8 border border-gray-200"
+              variants={reviewCardVariants}
             >
               <StarRating rating={review.rating} />
               <p className="text-charcoal text-base leading-relaxed mb-4">
@@ -93,9 +121,9 @@ export default function Reviews() {
                 </span>
                 <span className="text-text-muted text-xs">{review.date}</span>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

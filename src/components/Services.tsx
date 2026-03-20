@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import {
   Droplets,
   Disc,
@@ -11,6 +11,14 @@ import {
   Car,
   Wrench,
 } from "lucide-react";
+import { motion } from "framer-motion";
+import {
+  containerVariants,
+  itemVariants,
+  slideLeft,
+  viewportOnce,
+  prefersReducedMotion,
+} from "@/lib/animations";
 
 const services = [
   {
@@ -64,50 +72,46 @@ const services = [
 ];
 
 export default function Services() {
-  const sectionRef = useRef<HTMLElement>(null);
+  const [reduced, setReduced] = useState(false);
 
   useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-    el.querySelectorAll(".fade-up").forEach((child) => observer.observe(child));
-    return () => observer.disconnect();
+    setReduced(prefersReducedMotion());
   }, []);
 
   return (
-    <section
-      id="services"
-      ref={sectionRef}
-      className="bg-charcoal py-20 sm:py-28"
-    >
+    <section id="services" className="bg-charcoal py-20 sm:py-28">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        {/* Header */}
-        <div className="fade-up text-center mb-14">
+        {/* Header — slides in from left */}
+        <motion.div
+          className="text-center mb-14"
+          variants={slideLeft}
+          initial={reduced ? false : "hidden"}
+          whileInView="visible"
+          viewport={viewportOnce}
+        >
           <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white uppercase mb-3">
             Our Services
           </h2>
           <p className="text-text-muted text-lg max-w-xl mx-auto">
             Full-service auto repair for all makes and models
           </p>
-        </div>
+        </motion.div>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {services.map((service, i) => {
+        {/* Grid — staggered cards */}
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"
+          variants={containerVariants}
+          initial={reduced ? false : "hidden"}
+          whileInView="visible"
+          viewport={viewportOnce}
+        >
+          {services.map((service) => {
             const Icon = service.icon;
             return (
-              <div
+              <motion.div
                 key={service.name}
-                className={`fade-up fade-up-delay-${(i % 4) + 1} group bg-charcoal-light border border-gray-medium/30 rounded-lg p-6 hover:border-t-amber hover:border-t-2 hover:-translate-y-1 transition-all duration-300 cursor-pointer`}
+                className="group bg-charcoal-light border border-gray-medium/30 rounded-lg p-6 hover:border-t-amber hover:border-t-2 hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+                variants={itemVariants}
               >
                 <div className="w-12 h-12 rounded-lg bg-amber/10 flex items-center justify-center mb-4 group-hover:bg-amber/20 transition-colors">
                   <Icon className="w-6 h-6 text-amber" />
@@ -121,10 +125,10 @@ export default function Services() {
                 <span className="font-display font-bold text-amber text-sm">
                   {service.price}
                 </span>
-              </div>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
