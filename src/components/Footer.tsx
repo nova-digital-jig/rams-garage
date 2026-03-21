@@ -93,7 +93,7 @@ export default function Footer() {
               rel="noopener noreferrer"
               className="text-amber hover:underline"
             >
-              Nova Digital
+              Vektor
             </a>
           </p>
         </div>
