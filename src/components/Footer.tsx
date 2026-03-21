@@ -88,7 +88,7 @@ export default function Footer() {
           <p>
             &copy; 2026 Ram&apos;s Garage. Website by{" "}
             <a
-              href="https://nova-digital-nextjs.vercel.app"
+              href="https://nova-agents.vercel.app"
               target="_blank"
               rel="noopener noreferrer"
               className="text-amber hover:underline"
